@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大理白族文化展示</title>
+    <style>
+        :root {
+            --primary-color: #4a6da7;
+            --secondary-color: #e74c3c;
+            --accent-color: #f1c40f;
+            --text-dark: #333;
+            --text-light: #f8f9fa;
+            --shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        
+        body {
+            font-family: 'Microsoft YaHei', 'Segoe UI', Arial, sans-serif;
+            background-image: url(1.jpg);
+            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+        }
+        
+        header {
+            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7));
+            background-size: cover;
+            background-position: center;
+            color: white;
+            text-align: center;
+            padding: 5rem 1rem;
+            position: relative;
+        }
+        
+        .header-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+        }
+        
+        .subtitle {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 2rem;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {transform: translateY(0) translateX(-50%);}
+            40% {transform: translateY(-20px) translateX(-50%);}
+            60% {transform: translateY(-10px) translateX(-50%);}
+        }
+        
+        nav {
+            background-color: white;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+        }
+        
+        .nav-logo {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.2rem;
+        }
+        
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+        
+        .nav-links a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+        
+        .nav-links a:hover {
+            color: var(--primary-color);
+        }
+        
+        .hamburger {
+            display: none;
+            cursor: pointer;
+        }
+        
+        .section {
+            padding: 4rem 1rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        .section-title {
+            text-align: center;
+            margin-bottom: 3rem;
+            color: var(--primary-color);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: "";
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--accent-color);
+            margin: 1rem auto;
+        }
+        
+        .card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .card {
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card-img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .card-content {
+            padding: 1.5rem;
+        }
+        
+        .card-title {
+            margin-top: 0;
+            color: var(--secondary-color);
+        }
+        
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1rem;
+            margin-top: 2rem;
+        }
+        
+        .gallery-item {
+            position: relative;
+            overflow: hidden;
+            border-radius: 8px;
+            height: 200px;
+            cursor: pointer;
+        }
+        
+        .gallery-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+        
+        .gallery-item:hover .gallery-img {
+            transform: scale(1.1);
+        }
+        
+        .gallery-caption {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0, 0, 0, 0.7);
+            color: white;
+            padding: 0.5rem;
+            transform: translateY(100%);
+            transition: transform 0.3s;
+        }
+        
+        .gallery-item:hover .gallery-caption {
+            transform: translateY(0);
+        }
+        
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-content {
+            max-width: 90%;
+            max-height: 90%;
+        }
+        
+        .modal-img {
+            max-width: 100%;
+            max-height: 90vh;
+            display: block;
+            margin: 0 auto;
+        }
+        
+        .close-modal {
+            position: absolute;
+            top: 20px;
+            right: 30px;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+        }
+        
+        .tab-container {
+            margin-top: 2rem;
+        }
+        
+        .tab-buttons {
+            display: flex;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: all 0.3s;
+            position: relative;
+        }
+        
+        .tab-btn.active {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .tab-btn.active:after {
+            content: "";
+            position: absolute;
+            bottom: -1px;
+            left: 0;
+            width: 100%;
+            height: 3px;
+            background: var(--primary-color);
+        }
+        
+        .tab-content {
+            display: none;
+            padding: 1.5rem;
+            background: white;
+            border-radius: 0 0 8px 8px;
+        }
+        
+        .tab-content.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        
+        @keyframes fadeIn {
+            from {opacity: 0;}
+            to {opacity: 1;}
+        }
+        
+        footer {
+            background: var(--text-dark);
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+        
+        .social-icon {
+            color: white;
+            font-size: 1.5rem;
+            transition: color 0.3s;
+        }
+        
+        .social-icon:hover {
+            color: var(--accent-color);
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 60px;
+                left: 0;
+                right: 0;
+                background: white;
+                padding: 1rem;
+                box-shadow: var(--shadow);
+            }
+            
+            .nav-links.active {
+                display: flex;
+            }
+            
+            .hamburger {
+                display: block;
+            }
+            
+            .card-container {
+                grid-template-columns: 1fr;
+            }
+            
+            .gallery {
+                grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            }
+        }
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body>
+    <header>
+        <div class="header-content">
+            <h1>大理白族文化</h1>
+            <div class="subtitle">苍山洱海的明珠 · 千年南诏的传承</div>
+            <div class="scroll-down"><i class="fas fa-chevron-down"></i></div>
+        </div>
+    </header>
+    
+    <nav>
+        <div class="nav-container">
+            <div class="nav-logo">白族文化</div>
+            <div class="hamburger" id="hamburger">
+                <i class="fas fa-bars"></i>
+            </div>
+            <div class="nav-links" id="navLinks">
+                <a href="#overview">民族概况</a>
+                <a href="#architecture">建筑艺术</a>
+                <a href="#costume">服饰文化</a>
+                <a href="#festival">传统节日</a>
+                <a href="#geography">地理分布</a>
+            </div>
+        </div>
+    </nav>
+    
+    <section id="overview" class="section">
+        <h2 class="section-title">民族概况</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\白族\3.png" alt="白族历史" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">历史渊源</h3>
+                    <p>白族是中国西南地区历史悠久、文化灿烂的少数民族之一，其先民可追溯至秦汉时期的"滇僰"人。唐宋时期建立南诏、大理国，创造了辉煌的文明。白族自称"白子"、"白尼"，意为"白人"。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\白族\2.jpg" alt="白族人口" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">人口分布</h3>
+                    <p>中国境内白族约193万人(2020年),80%聚居在云南大理白族自治州，其余分布在昆明、丽江、保山等地。湖南桑植、贵州毕节等地也有分布。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\白族\4.png" alt="白族文字" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">语言文字</h3>
+                    <p>白语属汉藏语系藏缅语族彝语支，有南部、中部和北部三大方言。历史上曾使用汉字型白文(僰文)，现通行汉文。白族民歌、大本曲等口头文学丰富。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="architecture" class="section">
+        <h2 class="section-title">建筑艺术</h2>
+        
+        <div class="tab-container">
+            <div class="tab-buttons">
+                <button class="tab-btn active" data-tab="traditional-house">民居建筑</button>
+                <button class="tab-btn" data-tab="temple-architecture">宗教建筑</button>
+                <button class="tab-btn" data-tab="modern-blend">现代融合</button>
+            </div>
+            
+            <div id="traditional-house" class="tab-content active">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\白族\8.png" alt="白族三坊一照壁" class="gallery-img">
+                        <div class="gallery-caption">三坊一照壁</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\白族\9.png" alt="白族四合五天井" class="gallery-img">
+                        <div class="gallery-caption">四合五天井</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\白族\10.png" alt="白族民居彩绘" class="gallery-img">
+                        <div class="gallery-caption">门楼彩绘</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\白族\11.png" alt="白族民居细节" class="gallery-img">
+                        <div class="gallery-caption">照壁装饰</div>
+                    </div>
+                </div>
+                <p>白族民居以"三坊一照壁"、"四合五天井"为典型格局，青瓦白墙，飞檐翘角。门楼装饰精美，照壁题字寓意吉祥。民居注重风水布局，讲究"背靠苍山，面朝洱海"。建筑装饰融合木雕、石雕、彩绘、泥塑等多种工艺，题材多为花鸟鱼虫、山水人物、神话传说等。</p>
+            </div>
+            
+            <div id="temple-architecture" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\白族\12.png" alt="崇圣寺三塔" class="gallery-img">
+                        <div class="gallery-caption">崇圣寺三塔</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\白族\13.png" alt="本主庙" class="gallery-img">
+                        <div class="gallery-caption">本主庙</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\白族\14.png" alt="白族寺庙" class="gallery-img">
+                        <div class="gallery-caption">寺庙建筑</div>
+                    </div>
+                </div>
+                <p>白族宗教建筑融合佛教、道教和本主信仰特色。崇圣寺三塔是大理标志性建筑,建于南诏时期,主塔高69.13米，为唐代密檐式砖塔典范。本主庙是白族村寨特有建筑，供奉各村保护神"本主"，建筑风格与民居相似但装饰更为华丽。</p>
+            </div>
+            
+            <div id="modern-blend" class="tab-content">
+                <div class="gallery">
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\白族\15.png" alt="现代白族建筑" class="gallery-img">
+                        <div class="gallery-caption">现代民居</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\白族\16.png" alt="白族风格酒店" class="gallery-img">
+                        <div class="gallery-caption">特色酒店</div>
+                    </div>
+                    <div class="gallery-item">
+                        <img src="D:\云端风华-少数民族之韵\白族\17.png" alt="公共建筑" class="gallery-img">
+                        <div class="gallery-caption">公共建筑</div>
+                    </div>
+                </div>
+                <p>当代白族地区建筑在保持传统风格基础上融入现代元素。新建民居保留三坊一照壁格局但内部设施现代化；旅游区酒店、客栈多采用白族建筑符号；公共建筑如博物馆、剧院等也常借鉴传统形式，形成独特的地域建筑风格。</p>
+            </div>
+        </div>
+    </section>
+    
+    <section id="costume" class="section">
+        <h2 class="section-title">服饰文化</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\白族\5.png" alt="白族女性服饰" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">女性服饰</h3>
+                    <p>白族女性服饰以"风花雪月"为主题：头饰象征"风"(包头或绣花头巾)、"花"(发辫装饰)、"雪"(白色上衣)、"月"(围腰形状)。上衣多为白色或浅色右衽短衫，外套深色坎肩；下穿蓝色长裤，系绣花围腰；配银饰、玉器等。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\白族\6.png" alt="白族男性服饰" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">男性服饰</h3>
+                    <p>白族男性传统服饰较为简洁：头缠白色或蓝色包头；上衣为白色对襟短衣，外套深色坎肩；下穿宽筒长裤；节日时佩戴绣花挎包。老年男子多穿长衫马褂，保留更多传统元素。</p>
+                </div>
+            </div>
+            <div class="card">
+                <img src="D:\云端风华-少数民族之韵\白族\7.png" alt="白族扎染" class="card-img">
+                <div class="card-content">
+                    <h3 class="card-title">扎染工艺</h3>
+                    <p>大理白族扎染(又称"绞缬")是国家级非遗，以板蓝根为染料，通过扎结、浸染等工序制作蓝白相间的图案。传统纹样有蝴蝶、梅花、鸟兽等，现代创新图案更加多样，广泛用于服饰、家居等领域。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section id="festival" class="section">
+        <h2 class="section-title">传统节日</h2>
+        
+        <div class="gallery">
+            <div class="gallery-item">
+                <img src="D:\云端风华-少数民族之韵\白族\18.png" alt="三月街" class="gallery-img">
+                <div class="gallery-caption">三月街</div>
+            </div>
+            <div class="gallery-item">
+                <img src="D:\云端风华-少数民族之韵\白族\19.png" alt="绕三灵" class="gallery-img">
+                <div class="gallery-caption">绕三灵</div>
+            </div>
+            <div class="gallery-item">
+                <img src="D:\云端风华-少数民族之韵\白族\20.png" alt="火把节" class="gallery-img">
+                <div class="gallery-caption">火把节</div>
+            </div>
+            <div class="gallery-item">
+                <img src="D:\云端风华-少数民族之韵\白族\21.png" alt="本主节" class="gallery-img">
+                <div class="gallery-caption">本主节</div>
+            </div>
+        </div>
+        
+        <div class="text-group">
+            <h3>三月街民族节</h3>
+            <p>大理最盛大的传统节日和物资交流盛会,每年农历三月十五至二十一举行,已有1300多年历史。节日期间举行赛马、对歌、跳舞等文体活动，同时进行大规模商贸交易，被誉为"千年赶一街，一街赶千年"。</p>
+            
+            <h3>绕三灵</h3>
+            <p>白族民间歌舞盛会，农历四月二十三至二十五举行。人们身着盛装，手持柳枝，载歌载舞绕行于"佛都"崇圣寺、"神都"圣源寺、"仙都"金圭寺之间，祈求风调雨顺、五谷丰登。</p>
+            
+            <h3>火把节</h3>
+            <p>农历六月二十五举行，白族与彝族共有的节日。人们点燃火把巡游田间，驱虫辟邪；青年男女通过火把传情；还有跳火把、抢火把等民俗活动，场面热烈壮观。</p>
+            
+            <h3>本主节</h3>
+            <p>各村寨祭祀本主的节日，时间因村而异。活动包括迎送本主、祭祀仪式、洞经音乐演奏、霸王鞭舞表演等，是白族宗教信仰和民间艺术的集中展示。</p>
+        </div>
+    </section>
+    
+    <section id="geography" class="section">
+        <h2 class="section-title">地理分布</h2>
+        
+        <div class="card-container">
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">聚居区域</h3>
+                    <p>白族主要聚居在云南大理白族自治州(大理市、剑川、鹤庆、云龙、洱源、宾川等县)，以及昆明、丽江、保山、怒江等地。湖南桑植、贵州毕节等地也有白族聚居区。</p>
+                </div>
+            </div>
+            <div class="card">
+                <div class="card-content">
+                    <h3 class="card-title">地理特征</h3>
+                    <p>白族多居住在海拔1000-2500米的平坝、河谷地区,如洱海周边、澜沧江谷地等。大理"风花雪月"四景(下关风、上关花、苍山雪、洱海月)构成了白族文化的自然背景。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="modal" id="imageModal">
+        <span class="close-modal">&times;</span>
+        <div class="modal-content">
+            <img src="" alt="" class="modal-img" id="modalImage">
+        </div>
+    </div>
+    
+    <footer>
+        <div class="footer-content">
+            <p>大理白族文化全景展示</p>
+            <div class="social-links">
+                <a href="#" class="social-icon"><i class="fab fa-weixin"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-weibo"></i></a>
+                <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                <a href="#" class="social-icon"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+    
+    <script>
+        // 响应式导航菜单
+        const hamburger = document.getElementById('hamburger');
+        const navLinks = document.getElementById('navLinks');
+        
+        hamburger.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+        
+        // 平滑滚动
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                navLinks.classList.remove('active');
+                
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // 标签页切换
+        const tabBtns = document.querySelectorAll('.tab-btn');
+        tabBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const tabId = btn.getAttribute('data-tab');
+                
+                // 移除所有active类
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+                
+                // 添加active类
+                btn.classList.add('active');
+                document.getElementById(tabId).classList.add('active');
+            });
+        });
+        
+        // 图片模态框
+        const galleryItems = document.querySelectorAll('.gallery-item');
+        const modal = document.getElementById('imageModal');
+        const modalImg = document.getElementById('modalImage');
+        const closeModal = document.querySelector('.close-modal');
+        
+        galleryItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const imgSrc = item.querySelector('img').src;
+                modalImg.src = imgSrc;
+                modal.style.display = 'flex';
+                document.body.style.overflow = 'hidden';
+            });
+        });
+        
+        closeModal.addEventListener('click', () => {
+            modal.style.display = 'none';
+            document.body.style.overflow = 'auto';
+        });
+        
+        modal.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+                document.body.style.overflow = 'auto';
+            }
+        });
+        
+        // 滚动动画
+        const sections = document.querySelectorAll('.section');
+        
+        function checkScroll() {
+            sections.forEach(section => {
+                const sectionTop = section.getBoundingClientRect().top;
+                const windowHeight = window.innerHeight;
+                
+                if (sectionTop < windowHeight * 0.75) {
+                    section.style.opacity = '1';
+                    section.style.transform = 'translateY(0)';
+                }
+            });
+        }
+        
+        // 初始化部分样式
+        sections.forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.5s, transform 0.5s';
+        });
+        
+        window.addEventListener('scroll', checkScroll);
+        window.addEventListener('load', checkScroll);
+    </script>
+</body>
+</html>
